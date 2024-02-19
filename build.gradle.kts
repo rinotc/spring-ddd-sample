@@ -1,8 +1,12 @@
+import nu.studer.gradle.jooq.JooqEdition
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    `java-library`
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
+    id("nu.studer.jooq") version "5.2.2"
+    id("java")
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.spring") version "1.9.22"
 }
@@ -19,14 +23,19 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("org.postgresql:postgresql")
+    api("org.jooq:jooq:3.16.10")
+    runtimeOnly("org.postgresql:postgresql:42.5.4")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // jooq
+    jooqGenerator("org.postgresql:postgresql:42.5.4")
 }
 
 tasks.withType<KotlinCompile> {
@@ -38,4 +47,34 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+jooq {
+    version.set("3.16.10")
+    edition.set(JooqEdition.OSS)
+    configurations {
+        create("main") {
+            jooqConfiguration.apply {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                    url = "jdbc:postgresql://localhost:5432/sdmt"
+                    user = "root"
+                    password = "password"
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                    target.apply {
+                        packageName = "com.github.rinotc.springrestsample.infra.generated.jooq"
+                        directory = "src/main/java/com/github/rinotc/springrestsample/infra/generated/jooq"
+                    }
+                }
+            }
+        }
+    }
 }

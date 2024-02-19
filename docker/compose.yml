@@ -12,9 +12,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: myuser
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_DB: sdmt
       POSTGRES_INIT_DB_ARGS: "--encoding=UTF-8"
     volumes:
       - ./postgres/initdb:/docker-entrypoint-initdb.d
