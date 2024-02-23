@@ -1,3 +1,15 @@
 ### GET request
 GET {{host}}/greeting
 Accept: application/json
+
+### POST 境界づけられたコンテキストの作成
+POST {{host}}/bounded-contexts/
+Content-Type: application/json
+
+{
+  "name": "Abc",
+  "alias": "ABC",
+  "overview": ""
+}
+
+

@@ -29,13 +29,20 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    api("org.jooq:jooq:3.16.10")
-    runtimeOnly("org.postgresql:postgresql:42.5.4")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    // Arrow
+    implementation("io.arrow-kt:arrow-core:1.2.0")
+    implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0")
+    // kotlin result
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.18")
+
+    // postgresql
+    runtimeOnly("org.postgresql:postgresql:42.7.0")
     // jooq
-    jooqGenerator("org.postgresql:postgresql:42.5.4")
+    api("org.jooq:jooq:3.16.10")
+    jooqGenerator("org.postgresql:postgresql:42.7.0")
 }
 
 tasks.withType<KotlinCompile> {

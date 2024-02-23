@@ -1,3 +1,5 @@
 package com.github.rinotc.springrestsample.libs.ddd
 
-interface ValueObject : AssertionConcerns
+import com.github.rinotc.springrestsample.libs.functional.Functional
+
+interface ValueObject : AssertionConcerns, Functional
