@@ -1,5 +1,5 @@
 ### GET request
-GET {{host}}/greeting
+GET {{host}}/bounded-contexts/8facfdf4-991b-4923-8170-65910a92abf9
 Accept: application/json
 
 ### POST 境界づけられたコンテキストの作成
@@ -11,5 +11,4 @@ Content-Type: application/json
   "alias": "ABC",
   "overview": ""
 }
-
 

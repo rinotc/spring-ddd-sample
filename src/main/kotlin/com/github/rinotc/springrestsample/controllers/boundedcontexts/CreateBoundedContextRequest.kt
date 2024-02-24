@@ -4,7 +4,7 @@ import com.github.michaelbull.result.binding
 import com.github.rinotc.springrestsample.core.boundedcontext.BoundedContextAlias
 import com.github.rinotc.springrestsample.core.boundedcontext.BoundedContextName
 import com.github.rinotc.springrestsample.core.boundedcontext.BoundedContextOverview
-import com.github.rinotc.springrestsample.usecases.CreateBoundedContextInput
+import com.github.rinotc.springrestsample.usecases.boundedcontexts.create.CreateBoundedContextInput
 import com.github.michaelbull.result.Result
 
 data class CreateBoundedContextRequest(

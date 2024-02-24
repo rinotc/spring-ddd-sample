@@ -1,4 +1,4 @@
-package com.github.rinotc.springrestsample.usecases
+package com.github.rinotc.springrestsample.usecases.boundedcontexts.create
 
 import com.github.michaelbull.result.*
 import com.github.rinotc.springrestsample.core.boundedcontext.*
