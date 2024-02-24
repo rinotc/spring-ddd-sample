@@ -5,7 +5,7 @@ plugins {
     `java-library`
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
-    id("nu.studer.jooq") version "5.2.2"
+    id("nu.studer.jooq") version "8.0"
     id("java")
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.spring") version "1.9.22"
@@ -39,10 +39,9 @@ dependencies {
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.18")
 
     // postgresql
-    runtimeOnly("org.postgresql:postgresql:42.7.0")
+    runtimeOnly("org.postgresql:postgresql")
     // jooq
-    api("org.jooq:jooq:3.16.10")
-    jooqGenerator("org.postgresql:postgresql:42.7.0")
+    jooqGenerator("org.postgresql:postgresql")
 }
 
 tasks.withType<KotlinCompile> {
