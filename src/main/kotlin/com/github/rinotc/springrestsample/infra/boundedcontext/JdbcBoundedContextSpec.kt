@@ -14,7 +14,7 @@ class JdbcBoundedContextSpec(private val dslContext: DSLContext): BoundedContext
         val count = this.dslContext.select(DSL.count())
             .from(BOUNDED_CONTEXTS)
             .where(BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ALIAS.eq(value.value))
-            .fetchOne(1, Int::class.java)!!
+            .fetchOne(0, Int::class.java)!!
         return count == 0
     }
 }

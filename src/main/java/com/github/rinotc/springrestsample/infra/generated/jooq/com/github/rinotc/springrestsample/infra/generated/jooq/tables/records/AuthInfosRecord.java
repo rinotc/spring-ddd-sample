@@ -214,5 +214,6 @@ public class AuthInfosRecord extends UpdatableRecordImpl<AuthInfosRecord> implem
         setUserId(userId);
         setHashedPassword(hashedPassword);
         setSalt(salt);
+        resetChangedOnNotNull();
     }
 }

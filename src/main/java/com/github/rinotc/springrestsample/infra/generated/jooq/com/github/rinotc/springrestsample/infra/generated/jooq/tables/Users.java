@@ -12,14 +12,18 @@ import com.github.rinotc.springrestsample.infra.generated.jooq.tables.records.Us
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function6;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row6;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -73,12 +77,12 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>public.users.created_at</code>. 作成日時
      */
-    public final TableField<UsersRecord, LocalDateTime> CREATED_AT = createField(DSL.name("created_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "作成日時");
+    public final TableField<UsersRecord, LocalDateTime> CREATED_AT = createField(DSL.name("created_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "作成日時");
 
     /**
      * The column <code>public.users.updated_at</code>. 更新日時
      */
-    public final TableField<UsersRecord, LocalDateTime> UPDATED_AT = createField(DSL.name("updated_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "更新日時");
+    public final TableField<UsersRecord, LocalDateTime> UPDATED_AT = createField(DSL.name("updated_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "更新日時");
 
     private Users(Name alias, Table<UsersRecord> aliased) {
         this(alias, aliased, null);
@@ -138,6 +142,11 @@ public class Users extends TableImpl<UsersRecord> {
         return new Users(alias, this);
     }
 
+    @Override
+    public Users as(Table<?> alias) {
+        return new Users(alias.getQualifiedName(), this);
+    }
+
     /**
      * Rename this table
      */
@@ -154,6 +163,14 @@ public class Users extends TableImpl<UsersRecord> {
         return new Users(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    public Users rename(Table<?> name) {
+        return new Users(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row6 type methods
     // -------------------------------------------------------------------------
@@ -161,5 +178,20 @@ public class Users extends TableImpl<UsersRecord> {
     @Override
     public Row6<String, String, String, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row6) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

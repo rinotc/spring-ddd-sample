@@ -41,6 +41,7 @@ dependencies {
     // postgresql
     runtimeOnly("org.postgresql:postgresql")
     // jooq
+    api("org.jooq:jooq:3.18.9")
     jooqGenerator("org.postgresql:postgresql")
 }
 
@@ -56,7 +57,7 @@ tasks.withType<Test> {
 }
 
 jooq {
-    version.set("3.16.10")
+    version.set("3.18.9")
     edition.set(JooqEdition.OSS)
     configurations {
         create("main") {

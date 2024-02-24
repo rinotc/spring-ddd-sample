@@ -222,5 +222,6 @@ public class BoundedContextsRecord extends UpdatableRecordImpl<BoundedContextsRe
         setBoundedContextAlias(boundedContextAlias);
         setBoundedContextName(boundedContextName);
         setBoundedContextOverview(boundedContextOverview);
+        resetChangedOnNotNull();
     }
 }

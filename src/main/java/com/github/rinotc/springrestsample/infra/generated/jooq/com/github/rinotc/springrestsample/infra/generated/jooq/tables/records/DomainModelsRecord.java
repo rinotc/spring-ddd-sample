@@ -255,5 +255,6 @@ public class DomainModelsRecord extends UpdatableRecordImpl<DomainModelsRecord> 
         setUbiquitousName(ubiquitousName);
         setEnglishName(englishName);
         setKnowledge(knowledge);
+        resetChangedOnNotNull();
     }
 }

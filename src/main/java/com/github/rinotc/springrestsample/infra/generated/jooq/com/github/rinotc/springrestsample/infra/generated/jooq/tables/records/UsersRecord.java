@@ -290,5 +290,6 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
         setAvatarUrl(avatarUrl);
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
+        resetChangedOnNotNull();
     }
 }
