@@ -11,17 +11,19 @@ class JdbcBoundedContextRepository(private val dslContext: DSLContext): BoundedC
 
     private val BOUNDED_CONTEXTS = BoundedContexts.BOUNDED_CONTEXTS
 
+    override fun findAll(): List<BoundedContext> {
+        return this.dslContext.select()
+            .from(BOUNDED_CONTEXTS)
+            .fetch()
+            .map { it.toBoundedContext() }
+    }
+
     override fun findById(id: BoundedContextId): BoundedContext? {
         return this.dslContext.select()
             .from(BOUNDED_CONTEXTS)
             .where(BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ID.eq(id.value.toString()))
             .fetchOne()?.map {
-                BoundedContext.reconstruct(
-                    BoundedContextId.of(it[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ID]!!),
-                    BoundedContextAlias(it[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ALIAS]!!),
-                    BoundedContextName(it[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_NAME]!!),
-                    BoundedContextOverview(it[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_OVERVIEW]!!)
-                )
+                it.toBoundedContext()
             }
     }
 
@@ -47,5 +49,14 @@ class JdbcBoundedContextRepository(private val dslContext: DSLContext): BoundedC
         this.dslContext.deleteFrom(BOUNDED_CONTEXTS)
             .where(BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ID.eq(entity.id.value.toString()))
             .execute()
+    }
+
+    private fun org.jooq.Record.toBoundedContext(): BoundedContext {
+        return BoundedContext.reconstruct(
+            BoundedContextId.of(this[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ID]!!),
+            BoundedContextAlias(this[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_ALIAS]!!),
+            BoundedContextName(this[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_NAME]!!),
+            BoundedContextOverview(this[BOUNDED_CONTEXTS.BOUNDED_CONTEXT_OVERVIEW]!!)
+        )
     }
 }

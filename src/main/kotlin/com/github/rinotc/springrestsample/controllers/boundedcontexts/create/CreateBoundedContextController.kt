@@ -20,7 +20,7 @@ class CreateBoundedContextController(
     private val createUseCase: CreateBoundedContextUseCase
 ) {
 
-    @PostMapping("/")
+    @PostMapping("")
     fun action(@RequestBody body: CreateBoundedContextRequest): ResponseEntity<Any> {
         return when (val r = body.validated()) {
             is Err -> {

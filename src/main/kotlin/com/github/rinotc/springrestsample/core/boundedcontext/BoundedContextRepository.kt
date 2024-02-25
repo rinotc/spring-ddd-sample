@@ -4,6 +4,8 @@ import com.github.rinotc.springrestsample.libs.ddd.Repository
 
 interface BoundedContextRepository: Repository<BoundedContext> {
 
+    fun findAll(): List<BoundedContext>
+
     fun findById(id: BoundedContextId): BoundedContext?
 
     fun insert(entity: BoundedContext): Unit

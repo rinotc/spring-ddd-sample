@@ -18,17 +18,25 @@ class GetBoundedContextController(
 ) {
     @GetMapping("/{id}")
     fun action(@PathVariable id: String): ResponseEntity<Any> {
-        val boundedContextId = BoundedContextId.of(id)
-        val input = GetBoundedContextInput(boundedContextId)
-        return when (val o = getUseCase.handle(input)) {
-            is GetBoundedContextOutput.Success -> {
-                val response = BoundedContextResponse(o.boundedContext)
-                ResponseEntity.ok(response)
-            }
+        try {
+            val boundedContextId = BoundedContextId.of(id)
+            val input = GetBoundedContextInput(boundedContextId)
+            return when (val o = getUseCase.handle(input)) {
+                is GetBoundedContextOutput.Success -> {
+                    val response = BoundedContextResponse(o.boundedContext)
+                    ResponseEntity.ok(response)
+                }
 
-            is GetBoundedContextOutput.NotFound -> {
-                ResponseEntity.notFound().build()
+                is GetBoundedContextOutput.NotFound -> {
+                    ResponseEntity.notFound().build()
+                }
             }
+        } catch (e: IllegalArgumentException) {
+            return ResponseEntity.badRequest().body(
+                mapOf(
+                    "message" to "invalid UUID format"
+                )
+            )
         }
     }
 }

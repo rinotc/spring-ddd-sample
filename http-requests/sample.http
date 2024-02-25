@@ -1,14 +1,18 @@
+### GET 境界づけられたコンテキスト一覧の取得
+GET {{host}}/bounded-contexts
+Accept: application/json
+
 ### GET request
 GET {{host}}/bounded-contexts/8facfdf4-991b-4923-8170-65910a92abf9
 Accept: application/json
 
 ### POST 境界づけられたコンテキストの作成
-POST {{host}}/bounded-contexts/
+POST {{host}}/bounded-contexts
 Content-Type: application/json
 
 {
-  "name": "Abc",
-  "alias": "ABC",
-  "overview": ""
+  "name": "スプリントバックログ",
+  "alias": "SPRINTBACKLOG",
+  "overview": "スプリントバックログを管理する君"
 }
 

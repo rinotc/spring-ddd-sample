@@ -30,6 +30,11 @@ class BoundedContext private constructor(
         return id.hashCode()
     }
 
+    override fun toString(): String {
+        return "BoundedContext(id=${id.value}, alias=${alias.value}, name=${name.value}, overview=${overview.value})"
+    }
+
+
     companion object {
         fun reconstruct(
             id: BoundedContextId,
