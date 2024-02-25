@@ -16,3 +16,5 @@ Content-Type: application/json
   "overview": "スプリントバックログを管理する君"
 }
 
+### DELETE 境界づけられたコンテキストの削除
+DELETE {{host}}/bounded-contexts/8facfdf4-991b-4923-8170-65910a92abf9
